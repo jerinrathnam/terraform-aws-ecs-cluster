@@ -96,8 +96,8 @@ resource "aws_ecs_task_definition" "this" {
       {
         name      = var.container_name != null ? var.container_name[count.index] : var.name[count.index]
         image     = var.create_ecr_repository ? "${aws_ecr_repository.this[count.index].repository_url}:${length(var.image_tags) > 1 ? var.image_tags[count.index] : var.image_tags[0]}" : "${local.account_id}.dkr.ecr.${local.region}.amazonaws.com/${var.ecr_repo_names[count.index]}:${length(var.image_tags) > 1 ? var.image_tags[count.index] : var.image_tags[0]}"
-        cpu       = length(var.container_cpu) > 1 ? var.container_cpu[count.index] : var.container_cpu[0]
-        memory    = length(var.container_memory) > 1 ? var.container_memory[count.index] : var.container_memory[0]
+        cpu       = length(var.container_cpu) > 0 ? null : length(var.container_cpu) > 1 ? var.container_cpu[count.index] : var.container_cpu[0]
+        memory    = length(var.container_memory) > 0 ? null : length(var.container_memory) > 1 ? var.container_memory[count.index] : var.container_memory[0]
         essential = true
 
         command          = var.task_commands
@@ -130,6 +130,7 @@ resource "aws_ecs_task_definition" "this" {
   )
 
   execution_role_arn = var.ecs_task_role_name != null ? "arn:aws:iam::${local.account_id}:role/${var.ecs_task_role_name}" : aws_iam_role.this[0].arn
+  task_role_arn      = var.ecs_task_role_name != null ? "arn:aws:iam::${local.account_id}:role/${var.ecs_task_role_name}" : aws_iam_role.this[0].arn
 
   runtime_platform {
     operating_system_family = var.operating_system_family
