@@ -74,13 +74,13 @@ variable "cluster_name" {
 variable "container_cpu" {
   type        = list(number)
   description = "List of CPU for container definition. If a single value is same for all containers, then provide one value is enough"
-  default     = [128]
+  default     = []
 }
 
 variable "container_memory" {
   type        = list(number)
   description = "List of Memory for container definition. If a single value is same for all containers, then provide one value is enough"
-  default     = [256]
+  default     = []
 }
 
 variable "container_name" {
