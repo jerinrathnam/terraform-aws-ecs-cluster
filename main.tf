@@ -107,6 +107,7 @@ resource "aws_ecs_task_definition" "this" {
         hostname         = var.task_host_name
         mountPoints      = var.task_mount_point
         volumesFrom      = var.task_volumes_from
+        volume           = var.task_volume
 
         logConfiguration = {
           logDriver = var.container_log_driver

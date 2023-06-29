@@ -272,6 +272,12 @@ variable "task_mount_point" {
   default     = null
 }
 
+variable "task_volume" {
+  type        = list(any)
+  description = "Data volumes to mount from efs or docker or windows"
+  default     = null
+}
+
 variable "task_volumes_from" {
   type        = list(map(any))
   description = "Data volumes to mount from another container"
